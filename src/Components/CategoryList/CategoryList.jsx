@@ -11,10 +11,10 @@ const CategoryList = () => {
     }, [])
     return (
         <div className="mb-4">
-            <h2>category length:{categories.length}</h2>
+
             <h2 className="text-5xl text-center mb-2" >Job Category List</h2>
-            <p className="text-2xl text-center">Explore thousands of job opportunities with all the information you need. Its your future</p>
-            <div className="flex space-between">
+            <p className="text-2xl text-center ">Explore thousands of job opportunities with all the information you need. Its your future</p>
+            <div className="flex space-between gap-8">
                 {
                     categories.map(category => <Category category={category} key={category.id}></Category>)
                 }
