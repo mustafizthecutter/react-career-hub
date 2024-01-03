@@ -3,7 +3,7 @@ import Category from "../Category/Category";
 
 const CategoryList = () => {
     const [categories, setCategories] = useState([]);
-    // console.log(category)
+    
     useEffect(() => {
         fetch(`categories.json`)
             .then(res => res.json())
