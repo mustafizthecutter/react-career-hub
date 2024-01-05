@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../Provider/AuthProvider";
 import { Link } from "react-router-dom";
 import { sendEmailVerification } from "firebase/auth";
-
+import SocialLink from "../SocialLink/SocialLink";
 
 
 const Register = () => {
@@ -11,12 +11,14 @@ const Register = () => {
     const [error, setError] = useState('');
     const handleRegister = e => {
         e.preventDefault();
+
         const email = e.target.email.value;
         const password = e.target.password.value;
         console.log(email, password);
 
         setSuccess('');
         setError('');
+
         if (password.length < 6) {
             return setError('Please input a password contains at least 6 characters!!')
 
@@ -31,10 +33,13 @@ const Register = () => {
         createUser(email, password)
             .then(result => {
                 console.log(result.user);
+
                 sendEmailVerification(result.user)
                     .then(() => { alert('Please check your Email!!!') })
                 e.target.reset();
+
                 setSuccess('User Created Successfully!!!');
+
                 logOut()
                     .then(() => { })
                     .catch(error => {
@@ -44,6 +49,7 @@ const Register = () => {
             .catch(error => setError(error.message));
     }
     return (
+
         <div className="hero min-h-screen bg-base-200">
             <div className="hero-content flex-col ">
                 <div className="text-center ">
@@ -68,7 +74,9 @@ const Register = () => {
                         <div className="form-control mt-6">
                             <button className="btn btn-primary">Register</button>
                         </div>
+
                     </form>
+
                     <p>New Here?? Please <button className="text-red-400 font-bold"><Link to={'/login'}>Login</Link></button> </p>
                     {
                         success && <p className="text-green-600 font-bold">{success}</p>
@@ -76,6 +84,7 @@ const Register = () => {
                     {
                         error && <p className="text-red-600 font-bold">{error}</p>
                     }
+                    <SocialLink></SocialLink> 
 
                 </div>
             </div>

@@ -1,8 +1,10 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from "firebase/auth";
+import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import auth from "../Fitrebase/firebase.config";
 
 export const AuthContext = createContext(null);
+
+const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
 
@@ -20,7 +22,13 @@ const AuthProvider = ({ children }) => {
     const logOut = () => {
         setLoading(true);
         return signOut(auth);
-    }
+    };
+
+    const googleLogIn = () => {
+        return signInWithPopup(auth, googleProvider)
+    };
+
+
 
     useEffect(() => {
         const unSubscribe = onAuthStateChanged(auth, currentUser => {
@@ -34,7 +42,9 @@ const AuthProvider = ({ children }) => {
         };
     }, []);
 
-    const authInfo = { user, createUser, signInUser, logOut, loading };
+
+
+    const authInfo = { user, createUser, signInUser, logOut, loading, googleLogIn };
     return (
         <AuthContext.Provider value={authInfo}>
             {children}
